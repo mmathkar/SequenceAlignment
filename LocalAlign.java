@@ -95,7 +95,7 @@ import java.util.*;
 			{
 				j++;
 			}			
-			s=desc.substring(i+1,j-1);
+			s=desc.substring(i+1,j);
 		}
 		return s;
 	}

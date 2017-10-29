@@ -4,17 +4,50 @@ import java.util.*;
 class OutputSequence
 { 
 	int score;
-	int qId;
-	int dbId;
+	int i;
+	
 	String qAlign,dbAlign;
+	String qid,dbId;
 	 public int getScore() {
 	        return score;
 	   }
 	   public void setScore(int score) {
 	    this.score = score;
+	   }	   
+	   public String getQSequenceId() {
+	        return qid;
+	   }
+	   public void setQSequenceId(String qid) {
+	    this.qid = qid;
+	   }
+	   
+	   public String getDbSequenceId() {
+	        return dbId;
+	   }
+	   public void setDbSequenceId(String dbId) {
+	    this.dbId = dbId;
+	   }
+	   public String getQuerySequence() {
+	        return qAlign;
+	   }
+	   public void setQuerySequence(String qAlign) {
+	    this.qAlign = qAlign;
+	   }
+	   public String getDbSequence() {
+	        return dbAlign;
+	   }
+	   public void setDbSequence(String dbAlign) {
+	    this.dbAlign = dbAlign;
+	   }
+	   public int getStartPosition() {
+	        return i;
+	   }
+	   public void setStartPosition(int i) {
+	    this.i = i;
 	   }
 	
 }
+
 	public class globalAlign {
 
 
@@ -23,75 +56,75 @@ class OutputSequence
 	static Map<Character,Integer> alpha;
 	
 	
-	public static void main(String[] args) throws IOException {
-		// hw1 1 queryfile datafile alphabet scorematrix 10 -3 
-		Output out = new SystemOut();
-		
-		
-		//set score matrix
-		scoreMat= new ArrayList<ArrayList<Integer>>();
-		Scanner alphaText = new Scanner(new File("alphabet.txt"));
-		Scanner input = new Scanner(new File("scoringmatrix.txt"));
-		while(input.hasNextLine())
-		{
-		    Scanner colReader = new Scanner(input.nextLine());
-		    ArrayList col = new ArrayList();
-		    while(colReader.hasNextInt())
-		    {
-		        col.add(colReader.nextInt());
-		    }
-		    scoreMat.add(col);
-		}
-	 System.out.println(scoreMat); 
-	// score=setScore();
-	 
-	//set alpha
-	alpha=new HashMap<Character,Integer>(); 
-	int x=0;String line;
-	line=alphaText.nextLine().toLowerCase();
-	while(x<4 && line.charAt(x)!='\n')
-	{
-		//alphaText.nextLine();
-		System.out.println(line.charAt(x));
-		alpha.put(line.charAt(x), x);
-		x++;
-		
-	}
-	System.out.println(alpha); 
-//	Scanner database = new Scanner(new File("database.txt"));
-//	Scanner query = new Scanner(new File("query.txt"));
-	String fn;
-	String database="database.txt";
-	fn="query.txt";
-	String qSeq="",dbSeq="";
-	int k=10;
-	OutputSequence op=new OutputSequence();
-	FastaSequence fsf= new FastaSequence(fn);
-	FastaSequence db= new FastaSequence(database);
-	List<Integer> score=new ArrayList<Integer>();
-	String qId,dbId;
-	
-	for (int i=0; i< fsf.size(); i++)
-	{
-		qSeq=fsf.getSequence(i);
-		for (int j=0; j< db.size(); j++)
-		{
-			qId=getId(fsf.getDescription());
-			dbId=getId(db.getDescription());
-			dbSeq=db.getSequence(j);
-			score.add(alignSequence(qSeq,dbSeq,scoreMat,alpha,-3));
-		}
-	}
-	
-	//System.out.println(score);
-	Collections.sort(score);
-	//Arrays.sort(score);
-	int s=score.size()-1;
-	for(int i=0;i<k;i++)
-	{
-		System.out.println("score"+i+score.get(s-i));
-	}
- }
+//	public static void main(String[] args) throws IOException {
+//		// hw1 1 queryfile datafile alphabet scorematrix 10 -3 
+//		Output out = new SystemOut();
+//		
+//		
+//		//set score matrix
+//		scoreMat= new ArrayList<ArrayList<Integer>>();
+//		Scanner alphaText = new Scanner(new File("alphabet.txt"));
+//		Scanner input = new Scanner(new File("scoringmatrix.txt"));
+//		while(input.hasNextLine())
+//		{
+//		    Scanner colReader = new Scanner(input.nextLine());
+//		    ArrayList col = new ArrayList();
+//		    while(colReader.hasNextInt())
+//		    {
+//		        col.add(colReader.nextInt());
+//		    }
+//		    scoreMat.add(col);
+//		}
+//	 System.out.println(scoreMat); 
+//	// score=setScore();
+//	 
+//	//set alpha
+//	alpha=new HashMap<Character,Integer>(); 
+//	int x=0;String line;
+//	line=alphaText.nextLine().toLowerCase();
+//	while(x<4 && line.charAt(x)!='\n')
+//	{
+//		//alphaText.nextLine();
+//		System.out.println(line.charAt(x));
+//		alpha.put(line.charAt(x), x);
+//		x++;
+//		
+//	}
+//	System.out.println(alpha); 
+////	Scanner database = new Scanner(new File("database.txt"));
+////	Scanner query = new Scanner(new File("query.txt"));
+//	String fn;
+//	String database="database.txt";
+//	fn="query.txt";
+//	String qSeq="",dbSeq="";
+//	int k=10;
+//	OutputSequence op=new OutputSequence();
+//	FastaSequence fsf= new FastaSequence(fn);
+//	FastaSequence db= new FastaSequence(database);
+//	List<Integer> score=new ArrayList<Integer>();
+//	String qId,dbId;
+//	
+//	for (int i=0; i< fsf.size(); i++)
+//	{
+//		qSeq=fsf.getSequence(i);
+//		for (int j=0; j< db.size(); j++)
+//		{
+//			qId=getId(fsf.getDescription());
+//			dbId=getId(db.getDescription());
+//			dbSeq=db.getSequence(j);
+//			score.add(alignSequence(qSeq,dbSeq,scoreMat,alpha,-3));
+//		}
+//	}
+//	
+//	//System.out.println(score);
+//	Collections.sort(score);
+//	//Arrays.sort(score);
+//	int s=score.size()-1;
+//	for(int i=0;i<k;i++)
+//	{
+//		System.out.println("score"+i+score.get(s-i));
+//	}
+// }
 
 	public static String getId(String desc)
 	{
@@ -108,7 +141,7 @@ class OutputSequence
 			{
 				j++;
 			}			
-			s=desc.substring(i+1,j-1);
+			s=desc.substring(i+1,j);
 		}
 		return s;
 	}
@@ -206,11 +239,15 @@ class OutputSequence
 		}
 			String s_aln1=s_aln.toString();
 			String t_aln1=t_aln.toString();
+			
 			System.out.println("Query String: "+s_aln.toString());
 			System.out.println("Database String: "+t_aln.toString());	
+			
 			List<String> alignString=new ArrayList<String>();
 			alignString.add(s_aln1);
 			alignString.add(t_aln1);
+			
+			//OutputSequence out=new OutputSequence();
 			return alignString;
 		
 	}
