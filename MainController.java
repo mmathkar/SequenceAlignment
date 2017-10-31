@@ -19,6 +19,7 @@ public class MainController
 		// hw1 1 queryfile datafile alphabet scorematrix 10 -3 
 		//set score matrix
 		scoreMat= new ArrayList<ArrayList<Integer>>();
+		long startTime = System.currentTimeMillis();
 		
 		Scanner alphaText = new Scanner(new File(args[3]+".txt"));
 		Scanner input = new Scanner(new File(args[4]+".txt"));
@@ -81,8 +82,7 @@ public class MainController
 					qId=globalAlign.getId(fsf.getDescription(i));//*****changed
 					dbId=globalAlign.getId(db.getDescription(j));
 					dbSeq=db.getSequence(j);
-					//score.add(globalAlign.alignSequence(qSeq,dbSeq,scoreMat,alpha,gap));
-					
+								
 					obj.setDbSequence(dbSeq);
 					obj.setQuerySequence(qSeq);	
 					obj.setQSequenceId(qId);
@@ -188,11 +188,7 @@ public class MainController
 		    }
 		});
 		
-//		int s=score.size()-1;
-//		for(int i=0;i<k;i++)
-//		{
-//			System.out.println("score"+i+score.get(s-i));
-//		}
+
 		
 		System.out.println("Top k scores are:");
 		
@@ -206,8 +202,9 @@ public class MainController
 			}
 		
 		
-		
-		
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		System.out.println(totalTime);		
 		
  }
 }

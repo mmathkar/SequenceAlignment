@@ -177,6 +177,7 @@ import java.util.*;
 	    int i=a[0];
 	    int j=a[1];
 	    int score=D[i][j];
+	    
 		List<String> sequenceList=traceback(D,qSeq.length(),dbSeq.length(),qSeq,dbSeq,scoreMat,alpha,gap);
 	   
 		obj.setQueryAlignment(sequenceList.get(0));
@@ -222,6 +223,7 @@ import java.util.*;
 			int d=D[i][j]-scoreMat.get(alpha.get(qSeq.charAt(i-1))).get(alpha.get(dbSeq.charAt(j-1)));
 			int elsei=D[i][j]-gap;
 			int Dij=D[i][j];
+			
 			if(D[i][j]-scoreMat.get(alpha.get(qSeq.charAt(i-1))).get(alpha.get(dbSeq.charAt(j-1))) == D[i-1][j-1])
 			{
 				t_aln=t_aln.append(qSeq.charAt(i-1));

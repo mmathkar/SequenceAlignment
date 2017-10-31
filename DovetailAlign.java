@@ -215,13 +215,13 @@ import java.util.*;
 			}
 			else if(D[i][j]-gap==D[i][j-1])
 			{
-				t_aln=t_aln.append("_");
+				t_aln=t_aln.append(".");
 				s_aln=s_aln.append(dbSeq.charAt(j-1));
 				j = j-1;
 			}
 			else if(D[i][j]-gap==D[i-1][j])
 			{
-				s_aln=s_aln.append("_");
+				s_aln=s_aln.append(".");
 				t_aln=t_aln.append(qSeq.charAt(i-1));
 				i = i-1;
 			}
@@ -235,7 +235,7 @@ import java.util.*;
 		{ 
 			while (j > 1)// && D[i-1][j]!=0 && D[i][j-1]!=0)
 		    {
-				t_aln=t_aln.append("_");
+				t_aln=t_aln.append(".");
 				s_aln=s_aln.append(dbSeq.charAt(j-1));
 				j = j-1;
 		    }
@@ -244,15 +244,15 @@ import java.util.*;
 		{ 
 			while (i > 1)// && D[i-1][j]!=0 && D[i][j-1]!=0)
 			{ 
-				s_aln=s_aln.append("_");
+				s_aln=s_aln.append(".");
 				t_aln=t_aln.append(qSeq.charAt(i-1));
 				i = i-1;
 			}
 		
 		}
 				
-			String s_aln1=s_aln.toString();
-			String t_aln1=t_aln.toString();
+			String s_aln1=s_aln.reverse().toString();
+			String t_aln1=t_aln.reverse().toString();
 			System.out.println("Query String: "+s_aln.toString());
 			System.out.println("Database String: "+t_aln.toString());	
 			List<String> alignString=new ArrayList<String>();

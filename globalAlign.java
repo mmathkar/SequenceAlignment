@@ -2,9 +2,7 @@ import java.io.*;
 import java.util.*;
 
 	public class globalAlign {
-
-
-	
+		
 //	static ArrayList<ArrayList<Integer>> scoreMat;
 //	static Map<Character,Integer> alpha;
 	
