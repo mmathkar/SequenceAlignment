@@ -157,33 +157,39 @@ import java.util.*;
 		      int scoreLeft = D[i][j - 1] + gap; // insertion
 		      int scoreUp = D[i - 1][j] + gap; // deletion
 		        // we take the max
-		        D[i][j] = Math.max(0, Math.max(Math.max(scoreDiag, scoreLeft), scoreUp));//change to max
+		      D[i][j] = Math.max(0, Math.max(Math.max(scoreDiag, scoreLeft), scoreUp));//change to max
 //		        System.out.println(i+" "+j+" d=="+D[i][j]);
 
 		    }
 		}
        // System.out.println(qSeq.length()+" "+dbSeq.length()+" d=="+D[qSeq.length()][dbSeq.length()]);
 		
-		int score=D[qSeq.length()][dbSeq.length()];
+		int scoreOld=D[qSeq.length()][dbSeq.length()];
 		
 		//System.out.println("Score of sequence"+score);
 	    //List<String> sequenceList=traceback(D,qSeq.length(),dbSeq.length(),qSeq,dbSeq,scoreMat,alpha,gap);
 	    
 		//return score;
 		
+		
+		int[] a=new int[2];
+		a=getMaxIndex(D);
+	    int i=a[0];
+	    int j=a[1];
+	    int score=D[i][j];
 		List<String> sequenceList=traceback(D,qSeq.length(),dbSeq.length(),qSeq,dbSeq,scoreMat,alpha,gap);
 	   
 		obj.setQueryAlignment(sequenceList.get(0));
 	    obj.setDbAlignment(sequenceList.get(1));
-	    obj.setStartPositionQuery(Integer.parseInt(sequenceList.get(2)));//set i
-	    obj.setStartPositionDb(Integer.parseInt(sequenceList.get(3)));//set j
+	    obj.setStartPositionQuery(Integer.parseInt(sequenceList.get(2))-1);//set i
+	    obj.setStartPositionDb(Integer.parseInt(sequenceList.get(3))-1);//set j
 	    obj.setScore(score);
 		
 	}
 	
 	  public static int[] getMaxIndex(int[ ][ ] a)
 	  {
-	      int maxVal = -99999;
+	      int maxVal = Integer.MIN_VALUE;
 	      int[] answerArray = new int[2];
 	      for(int row = 0; row < a.length; row++)
 	      {
@@ -259,8 +265,8 @@ import java.util.*;
 			}
 		
 		}
-			String s_aln1=s_aln.toString();
-			String t_aln1=t_aln.toString();
+			String s_aln1=s_aln.reverse().toString();
+			String t_aln1=t_aln.reverse().toString();
 			System.out.println("start position in query:"+i+" Query String: "+s_aln.toString());
 			System.out.println("start position in db:"+j+" Database String: "+t_aln.toString());	
 			List<String> alignString=new ArrayList<String>();
@@ -271,9 +277,5 @@ import java.util.*;
 			return alignString;
 		
 	}
-	public static int setScores(char x,char y)
-	{
-		int value=0;
-		return value;
-	}
+	
 	}

@@ -62,8 +62,8 @@ import java.util.*;
 		qSeq=fsf.getSequence(i);
 		for (int j=0; j< db.size(); j++)
 		{
-			qId=getId(fsf.getDescription());
-			dbId=getId(db.getDescription());
+			qId=getId(fsf.getDescription(i));
+			dbId=getId(db.getDescription(j));
 			dbSeq=db.getSequence(j);
 			score.add(alignSequence(qSeq,dbSeq,scoreMat,alpha,-3));
 		}

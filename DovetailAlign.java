@@ -9,75 +9,75 @@ import java.util.*;
 	static Map<Character,Integer> alpha;
 	
 	
-	public static void main(String[] args) throws IOException {
-		// hw1 1 queryfile datafile alphabet scorematrix 10 -3 
-		Output out = new SystemOut();
-		
-		
-		//set score matrix
-		scoreMat= new ArrayList<ArrayList<Integer>>();
-		Scanner alphaText = new Scanner(new File("alphabet.txt"));
-		Scanner input = new Scanner(new File("scoringmatrix.txt"));
-		while(input.hasNextLine())
-		{
-		    Scanner colReader = new Scanner(input.nextLine());
-		    ArrayList col = new ArrayList();
-		    while(colReader.hasNextInt())
-		    {
-		        col.add(colReader.nextInt());
-		    }
-		    scoreMat.add(col);
-		}
-	 System.out.println(scoreMat); 
-	// score=setScore();
-	 
-	//set alpha
-	alpha=new HashMap<Character,Integer>(); 
-	int x=0;String line;
-	line=alphaText.nextLine().toLowerCase();
-	while(x<4 && line.charAt(x)!='\n')
-	{
-		//alphaText.nextLine();
-		System.out.println(line.charAt(x));
-		alpha.put(line.charAt(x), x);
-		x++;
-		
-	}
-	System.out.println(alpha); 
-//	Scanner database = new Scanner(new File("database.txt"));
-//	Scanner query = new Scanner(new File("query.txt"));
-	String fn;
-	String database="database.txt";
-	fn="query.txt";
-	String qSeq="",dbSeq="";
-	int k=10;
-	OutputSequence op=new OutputSequence();
-	FastaSequence fsf= new FastaSequence(fn);
-	FastaSequence db= new FastaSequence(database);
-	List<Integer> score=new ArrayList<Integer>();
-	String qId,dbId;
-	
-	for (int i=0; i< fsf.size(); i++)
-	{
-		qSeq=fsf.getSequence(i);
-		for (int j=0; j< db.size(); j++)
-		{
-			qId=getId(fsf.getDescription());
-			dbId=getId(db.getDescription());
-			dbSeq=db.getSequence(j);
-			score.add(alignSequence(qSeq,dbSeq,scoreMat,alpha,-3));
-		}
-	}
-	
-	//System.out.println(score);
-	Collections.sort(score);
-	//Arrays.sort(score);
-	int s=score.size()-1;
-	for(int i=0;i<k;i++)
-	{
-		System.out.println("score"+i+score.get(s-i));
-	}
- }
+//	public static void main(String[] args) throws IOException {
+//		// hw1 1 queryfile datafile alphabet scorematrix 10 -3 
+//		Output out = new SystemOut();
+//		
+//		
+//		//set score matrix
+//		scoreMat= new ArrayList<ArrayList<Integer>>();
+//		Scanner alphaText = new Scanner(new File("alphabet.txt"));
+//		Scanner input = new Scanner(new File("scoringmatrix.txt"));
+//		while(input.hasNextLine())
+//		{
+//		    Scanner colReader = new Scanner(input.nextLine());
+//		    ArrayList col = new ArrayList();
+//		    while(colReader.hasNextInt())
+//		    {
+//		        col.add(colReader.nextInt());
+//		    }
+//		    scoreMat.add(col);
+//		}
+//	 System.out.println(scoreMat); 
+//	// score=setScore();
+//	 
+//	//set alpha
+//	alpha=new HashMap<Character,Integer>(); 
+//	int x=0;String line;
+//	line=alphaText.nextLine().toLowerCase();
+//	while(x<4 && line.charAt(x)!='\n')
+//	{
+//		//alphaText.nextLine();
+//		System.out.println(line.charAt(x));
+//		alpha.put(line.charAt(x), x);
+//		x++;
+//		
+//	}
+//	System.out.println(alpha); 
+////	Scanner database = new Scanner(new File("database.txt"));
+////	Scanner query = new Scanner(new File("query.txt"));
+//	String fn;
+//	String database="database.txt";
+//	fn="query.txt";
+//	String qSeq="",dbSeq="";
+//	int k=10;
+//	OutputSequence op=new OutputSequence();
+//	FastaSequence fsf= new FastaSequence(fn);
+//	FastaSequence db= new FastaSequence(database);
+//	List<Integer> score=new ArrayList<Integer>();
+//	String qId,dbId;
+//	
+//	for (int i=0; i< fsf.size(); i++)
+//	{
+//		qSeq=fsf.getSequence(i);
+//		for (int j=0; j< db.size(); j++)
+//		{
+//			qId=getId(fsf.getDescription());
+//			dbId=getId(db.getDescription());
+//			dbSeq=db.getSequence(j);
+//			score.add(alignSequence(qSeq,dbSeq,scoreMat,alpha,-3));
+//		}
+//	}
+//	
+//	//System.out.println(score);
+//	Collections.sort(score);
+//	//Arrays.sort(score);
+//	int s=score.size()-1;
+//	for(int i=0;i<k;i++)
+//	{
+//		System.out.println("score"+i+score.get(s-i));
+//	}
+// }
 
 	public static String getId(String desc)
 	{
@@ -100,8 +100,10 @@ import java.util.*;
 	}
 	
 
-	public static int alignSequence(String qSeq,String dbSeq,ArrayList<ArrayList<Integer>> scoreMat,Map<Character,Integer> alpha,int gap)
+	public static void alignSequence(OutputSequence obj,ArrayList<ArrayList<Integer>> scoreMat,Map<Character,Integer> alpha,int gap)
 	{
+		String qSeq=obj.getQuerySequence();
+		String dbSeq=obj.getDbSequence();
 		
 		int[][] D = new int[qSeq.length() + 1][dbSeq.length() + 1];
 
@@ -126,12 +128,22 @@ import java.util.*;
 		}
         //System.out.println(qSeq.length()+" "+dbSeq.length()+" d=="+D[qSeq.length()][dbSeq.length()]);
 		
-		int score=D[qSeq.length()][dbSeq.length()];
-		System.out.println("Score of sequence"+score);
+		int score=D[qSeq.length()][dbSeq.length()];//*****change score
+		
+		
+		//System.out.println("Score of sequence"+score);
 		//System.out.println(D);
-	    List<String> sequenceList=traceback(D,qSeq.length(),dbSeq.length(),qSeq,dbSeq,scoreMat,alpha,gap);
+	    List<String> sequenceList=traceback(D,obj,qSeq.length(),dbSeq.length(),qSeq,dbSeq,scoreMat,alpha,gap);
 	    
-		return score;
+	    
+	    obj.setQueryAlignment(sequenceList.get(0));
+	    obj.setDbAlignment(sequenceList.get(1));
+	    
+	    obj.setStartPositionQuery(Integer.parseInt(sequenceList.get(2)));//set i
+	    obj.setStartPositionDb(Integer.parseInt(sequenceList.get(3)));//set j
+	    //obj.setScore(score);
+	    
+		//return score;
 		
 	}
 	
@@ -171,7 +183,7 @@ import java.util.*;
 	  }
 	
 	
-	public static List<String> traceback(int D[][],int q,int db,String qSeq,String dbSeq,ArrayList<ArrayList<Integer>> scoreMat,Map<Character,Integer> alpha,int gap)
+	public static List<String> traceback(int D[][],OutputSequence obj,int q,int db,String qSeq,String dbSeq,ArrayList<ArrayList<Integer>> scoreMat,Map<Character,Integer> alpha,int gap)
 	{
 		
 		
@@ -183,6 +195,10 @@ import java.util.*;
 	    //b=getMaxIndexDove(D[q][0]);
 	    int i=a[0];
 	    int j=a[1];
+	    int score=D[i][j];
+	    obj.setScore(score);
+	    
+	    System.out.println("Score of sequence"+score);
 
 		while(i>1 && j>1)//&& D[i-1][j]!=0 && D[i][j-1]!=0)
 		{
@@ -242,6 +258,8 @@ import java.util.*;
 			List<String> alignString=new ArrayList<String>();
 			alignString.add(s_aln1);
 			alignString.add(t_aln1);
+			alignString.add(Integer.toString(i));//start position in query
+			alignString.add(Integer.toString(j));//start pos in db
 			return alignString;
 		
 	}

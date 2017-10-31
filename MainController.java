@@ -12,6 +12,9 @@ public class MainController
 	static ArrayList<ArrayList<Integer>> scoreMat;
 	static Map<Character,Integer> alpha;
 	
+	
+			
+	
 	public static void main(String[] args) throws IOException {
 		// hw1 1 queryfile datafile alphabet scorematrix 10 -3 
 		//set score matrix
@@ -47,12 +50,9 @@ public class MainController
 			}
 		
 		System.out.println(alpha); 
-		String fn;
-		String database="database.txt";
-		fn="query.txt";
+		
 		String qSeq="",dbSeq="";
-		//int k=10;
-		OutputSequence op=new OutputSequence();
+		
 		
 		FastaSequence fsf= new FastaSequence(args[1]+".txt");//query
 		FastaSequence db= new FastaSequence(args[2]+".txt");//database
@@ -61,21 +61,25 @@ public class MainController
 		List<OutputSequence> objList=new ArrayList<OutputSequence>();
 		
 		String qId,dbId;
+		PrintStream out = new PrintStream(new FileOutputStream("outputDove.txt"));
+		System.setOut(out);
 		
 		switch(Integer.parseInt(args[0]))
 		{
 		
 		case 1:
+			
 			//GLOBAL ALIGNMENT
 			for (int i=0; i< fsf.size(); i++)
 			{
-				qSeq=fsf.getSequence(i);
+				    qSeq=fsf.getSequence(i);
 				for (int j=0; j< db.size(); j++)
 				{
 					OutputSequence obj=new OutputSequence();
+					OutputSequence ret_obj=new OutputSequence();
 					
-					qId=globalAlign.getId(fsf.getDescription());
-					dbId=globalAlign.getId(db.getDescription());
+					qId=globalAlign.getId(fsf.getDescription(i));//*****changed
+					dbId=globalAlign.getId(db.getDescription(j));
 					dbSeq=db.getSequence(j);
 					//score.add(globalAlign.alignSequence(qSeq,dbSeq,scoreMat,alpha,gap));
 					
@@ -85,13 +89,17 @@ public class MainController
 					obj.setDbSequenceId(dbId);
 					
 					//ret_score=globalAlign.alignSequence(qSeq,dbSeq,scoreMat,alpha,gap);
-					globalAlign.alignSequence(obj,scoreMat,alpha,gap);
+					ret_obj=globalAlign.alignSequence(obj,scoreMat,alpha,gap);
+					
+					System.out.println("start position in query:"+ret_obj.getStartPositionQuery()+" Query String: "+ret_obj.getQueryAlignment());
+					System.out.println("id:"+ret_obj.getDbSequenceId()+"start position in db:"+ret_obj.getStartPositionDb()+"Length"+ret_obj.getDbAlignment().length()+" Database String: ");
+					System.out.println(ret_obj.getDbAlignment());
 					
 					
 					//Setters
 					//obj.setScore(ret_score);
 					
-					objList.add(obj);
+					objList.add(ret_obj);
 					
 				}
 			}
@@ -106,8 +114,8 @@ public class MainController
 						{
 							OutputSequence obj=new OutputSequence();
 							
-							qId=globalAlign.getId(fsf.getDescription());
-							dbId=globalAlign.getId(db.getDescription());
+							qId=LocalAlign.getId(fsf.getDescription(i));
+							dbId=LocalAlign.getId(db.getDescription(j));
 							dbSeq=db.getSequence(j);
 							//score.add(globalAlign.alignSequence(qSeq,dbSeq,scoreMat,alpha,gap));
 							
@@ -138,8 +146,8 @@ public class MainController
 				{
 					OutputSequence obj=new OutputSequence();
 					
-					qId=globalAlign.getId(fsf.getDescription());
-					dbId=globalAlign.getId(db.getDescription());
+					qId=DovetailAlign.getId(fsf.getDescription(i));
+					dbId=DovetailAlign.getId(db.getDescription(j));
 					dbSeq=db.getSequence(j);
 					//score.add(globalAlign.alignSequence(qSeq,dbSeq,scoreMat,alpha,gap));
 					
@@ -149,7 +157,7 @@ public class MainController
 					obj.setDbSequenceId(dbId);
 					
 					//ret_score=globalAlign.alignSequence(qSeq,dbSeq,scoreMat,alpha,gap);
-					//DovetailAlign.alignSequence(obj,scoreMat,alpha,gap);
+					DovetailAlign.alignSequence(obj,scoreMat,alpha,gap);
 					
 					
 					//Setters
@@ -187,8 +195,6 @@ public class MainController
 //		}
 		
 		System.out.println("Top k scores are:");
-		PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
-		//System.setOut(out);
 		
 		
 		for(int i=0;i<k;i++)

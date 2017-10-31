@@ -137,7 +137,7 @@ import java.util.*;
 	
 	
 	
-	public static void alignSequence(OutputSequence obj,ArrayList<ArrayList<Integer>> scoreMat,Map<Character,Integer> alpha,int gap)
+	public static OutputSequence alignSequence(OutputSequence obj,ArrayList<ArrayList<Integer>> scoreMat,Map<Character,Integer> alpha,int gap)
 	{
 		String qSeq=obj.getQuerySequence();
 		String dbSeq=obj.getDbSequence();
@@ -171,13 +171,17 @@ import java.util.*;
 		//set alignments
 	    List<String> sequenceList=traceback(D,qSeq.length(),dbSeq.length(),qSeq,dbSeq,scoreMat,alpha,gap);
 	    obj.setQueryAlignment(sequenceList.get(0));
-	    obj.setDbAlignment(sequenceList.get(1));
-	    
-	    obj.setStartPositionQuery(Integer.parseInt(sequenceList.get(2)));//set i
-	    obj.setStartPositionDb(Integer.parseInt(sequenceList.get(3)));//set j
-	    
+	    obj.setDbAlignment(sequenceList.get(1));	    
+	    obj.setStartPositionQuery(Integer.parseInt(sequenceList.get(2))-1);//set i
+	    obj.setStartPositionDb(Integer.parseInt(sequenceList.get(3))-1);//set j	    
 	    obj.setScore(score);
-		//return obj;
+	    
+//	    System.out.println("start position in query:"+obj.getStartPositionQuery()+" Query String: "+obj.getQueryAlignment());
+//		System.out.println("start position in db:"+obj.getStartPositionDb()+"Length"+obj.getDbAlignment().length()+" Database String: ");
+//		System.out.println(obj.getDbAlignment());
+	    
+	    
+		return obj;
 		
 	}
 	
@@ -196,6 +200,7 @@ import java.util.*;
 				t_aln=t_aln.append(qSeq.charAt(i-1));
 				s_aln=s_aln.append(dbSeq.charAt(j-1));
 				i = i-1;j = j-1;
+				
 			}
 			else if(D[i][j]-gap==D[i][j-1])
 			{
@@ -234,12 +239,18 @@ import java.util.*;
 			}
 		
 		}
-		
-			String s_aln1=s_aln.toString();
-			String t_aln1=t_aln.toString();
+//		    s_aln.reverse();
+//		    t_aln.reverse();
+			String s_aln1=s_aln.reverse().toString();
+			String t_aln1=t_aln.reverse().toString();
 			
-//			System.out.println("Query String: "+s_aln.toString());
-//			System.out.println("Database String: "+t_aln.toString());	
+//			System.out.println("Query String: "+s_aln);
+//			System.out.println("Database String: "+t_aln);	
+			System.out.println("start position in query:"+i+" Query String: "+s_aln1);
+			System.out.println("start position in db:"+j+" Database String: "+t_aln1);
+			
+			if(t_aln.length()==0)
+				System.out.println("**********Empty db string  "+t_aln1);
 			
 			List<String> alignString=new ArrayList<String>();
 			alignString.add(s_aln1);
@@ -251,9 +262,5 @@ import java.util.*;
 			return alignString;
 		
 	}
-	public static int setScores(char x,char y)
-	{
-		int value=0;
-		return value;
-	}
+	
 	}

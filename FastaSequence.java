@@ -7,8 +7,8 @@ import java.util.*;
 
  public class FastaSequence {
 
-    private String [] description;
-    private String [] sequence;
+     String [] description;
+     String [] sequence;
 
     public FastaSequence(String filename)
     {
@@ -17,8 +17,8 @@ import java.util.*;
 
     void readSequenceFromFile(String file)
     {
-	List desc= new ArrayList();
-	List seq = new ArrayList();
+	List<String> desc= new ArrayList<String>();
+	List<String> seq = new ArrayList<String>();
 	try{
         BufferedReader in     = new BufferedReader( new FileReader( file ) );
         StringBuffer   buffer = new StringBuffer();
@@ -61,10 +61,10 @@ import java.util.*;
     }
     
     //return first sequence as a String
-    public String getSequence(){ return sequence[0];}
+   // public String getSequence(){ return sequence[0];}
 
     //return first xdescription as String
-    public String getDescription(){return description[0];}
+   // public String getDescription(){return description[0];}
 
     //return sequence as a String
     public String getSequence(int i){ return sequence[i];}
@@ -74,23 +74,28 @@ import java.util.*;
     
     public int size(){return sequence.length;}
     
-    public static void main(String [] args) throws Exception
+    /*public static void main(String [] args) throws Exception
     {
 	String fn ="";
-//	if (args.length>0) fn=args[0];
+//if (args.length>0) fn=args[0];
 //	else 
 //	{
-//	   System.out.print("Enter the name of the FastaFile:");
-//	   fn = (new BufferedReader(new InputStreamReader(System.in))).readLine();
-	
-	
+//   System.out.print("Enter the name of the FastaFile:");
+//   fn = (new BufferedReader(new InputStreamReader(System.in))).readLine();
+//	
+//	
 //	}
 	//Scanner fn = new Scanner(new File("query.txt"));
 //	fn="query.txt";
-	fn="database.txt";
+	fn="database2.txt";
 	FastaSequence fsf= new FastaSequence(fn);
 	System.out.println(fsf.size());
-	System.out.println("Sequence: \n"+ fsf.getSequence(99));
+	System.out.println("Sequence db: \n"+ fsf.getSequence(1));
+	
+	fn="query.txt";
+	FastaSequence q= new FastaSequence(fn);
+	System.out.println(q.size());
+	System.out.println("SequenceQ : \n"+ q.getSequence(1));
 	
 //	for (int i=0; i< fsf.size(); i++)
 //	{
@@ -98,6 +103,6 @@ import java.util.*;
 //	System.out.println("description: \n"+ fsf.getDescription(i));
 //	System.out.println("Sequence: \n"+ fsf.getSequence(i));
 //	}
-    }
+    }*/
 
 }
