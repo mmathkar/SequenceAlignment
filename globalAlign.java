@@ -183,10 +183,91 @@ import java.util.*;
 		
 	}
 	
+//	public static List<String> traceback(int D[][],int q,int db,String qSeq,String dbSeq,ArrayList<ArrayList<Integer>> scoreMat,Map<Character,Integer> alpha,int gap)
+//	{
+//		StringBuffer s_aln = new StringBuffer();
+//	    StringBuffer t_aln = new StringBuffer();
+//		int i=q,j=db;
+//
+//		while(i>1 && j>1)
+//		{
+//				
+//			
+//			if(D[i][j]-scoreMat.get(alpha.get(qSeq.charAt(i-1))).get(alpha.get(dbSeq.charAt(j-1))) == D[i-1][j-1])
+//			{
+//				t_aln=t_aln.append(qSeq.charAt(i-1));
+//				s_aln=s_aln.append(dbSeq.charAt(j-1));
+//				i = i-1;j = j-1;
+//				
+//			}
+//			else if(D[i][j]-gap==D[i][j-1])
+//			{
+//				t_aln=t_aln.append(".");
+//				s_aln=s_aln.append(dbSeq.charAt(j-1));
+//				j = j-1;
+//			}
+//			else if(D[i][j]-gap==D[i-1][j])
+//			{
+//				s_aln=s_aln.append(".");
+//				t_aln=t_aln.append(qSeq.charAt(i-1));
+//				i = i-1;
+//			}
+//			else
+//			{
+//				System.out.println("Error");
+//			}
+//		}
+//		
+//		if (j > 1)  
+//		{ 
+//			while (j > 1)
+//		    {
+//				t_aln=t_aln.append(".");
+//				s_aln=s_aln.append(dbSeq.charAt(j-1));
+//				j = j-1;
+//		    }
+//		}
+//		else if (i > 1) 
+//		{ 
+//			while (i > 1)
+//			{ 
+//				s_aln=s_aln.append(".");
+//				t_aln=t_aln.append(qSeq.charAt(i-1));
+//				i = i-1;
+//			}
+//		
+//		}
+////		    s_aln.reverse();
+////		    t_aln.reverse();
+//			String s_aln1=s_aln.reverse().toString();
+//			String t_aln1=t_aln.reverse().toString();
+//			
+////			System.out.println("Query String: "+s_aln);
+////			System.out.println("Database String: "+t_aln);	
+//			System.out.println("start position in query:"+i+" Query String: "+s_aln1);
+//			System.out.println("start position in db:"+j+" Database String: "+t_aln1);
+//			
+//			if(t_aln.length()==0)
+//				System.out.println("**********Empty db string  "+t_aln1);
+//			
+//			List<String> alignString=new ArrayList<String>();
+//			alignString.add(s_aln1);
+//			alignString.add(t_aln1);
+//			alignString.add(Integer.toString(i));//start position in query
+//			alignString.add(Integer.toString(j));//start pos in db
+//			
+//			//OutputSequence out=new OutputSequence();
+//			return alignString;
+//		
+//	}
+	
+	
 	public static List<String> traceback(int D[][],int q,int db,String qSeq,String dbSeq,ArrayList<ArrayList<Integer>> scoreMat,Map<Character,Integer> alpha,int gap)
 	{
-		StringBuffer s_aln = new StringBuffer();
-	    StringBuffer t_aln = new StringBuffer();
+//		StringBuffer s_aln = new StringBuffer();
+//	    StringBuffer t_aln = new StringBuffer();
+		String s_aln="";
+		String t_aln="";
 		int i=q,j=db;
 
 		while(i>1 && j>1)
@@ -195,21 +276,21 @@ import java.util.*;
 			
 			if(D[i][j]-scoreMat.get(alpha.get(qSeq.charAt(i-1))).get(alpha.get(dbSeq.charAt(j-1))) == D[i-1][j-1])
 			{
-				t_aln=t_aln.append(qSeq.charAt(i-1));
-				s_aln=s_aln.append(dbSeq.charAt(j-1));
+				t_aln=qSeq.charAt(i-1)+t_aln;
+				s_aln=dbSeq.charAt(j-1)+s_aln;
 				i = i-1;j = j-1;
 				
 			}
 			else if(D[i][j]-gap==D[i][j-1])
 			{
-				t_aln=t_aln.append(".");
-				s_aln=s_aln.append(dbSeq.charAt(j-1));
+				t_aln="."+t_aln;
+				s_aln=dbSeq.charAt(j-1)+s_aln;
 				j = j-1;
 			}
 			else if(D[i][j]-gap==D[i-1][j])
 			{
-				s_aln=s_aln.append(".");
-				t_aln=t_aln.append(qSeq.charAt(i-1));
+				s_aln="."+s_aln;
+				t_aln=qSeq.charAt(i-1)+t_aln;
 				i = i-1;
 			}
 			else
@@ -222,8 +303,8 @@ import java.util.*;
 		{ 
 			while (j > 1)
 		    {
-				t_aln=t_aln.append(".");
-				s_aln=s_aln.append(dbSeq.charAt(j-1));
+				t_aln="."+t_aln;
+				s_aln=dbSeq.charAt(j-1)+s_aln;
 				j = j-1;
 		    }
 		}
@@ -231,28 +312,28 @@ import java.util.*;
 		{ 
 			while (i > 1)
 			{ 
-				s_aln=s_aln.append(".");
-				t_aln=t_aln.append(qSeq.charAt(i-1));
+				s_aln="."+s_aln;
+				t_aln=qSeq.charAt(i-1)+t_aln;
 				i = i-1;
 			}
 		
 		}
 //		    s_aln.reverse();
 //		    t_aln.reverse();
-			String s_aln1=s_aln.reverse().toString();
-			String t_aln1=t_aln.reverse().toString();
+//			String s_aln1=s_aln.reverse().toString();
+//			String t_aln1=t_aln.reverse().toString();
 			
 //			System.out.println("Query String: "+s_aln);
 //			System.out.println("Database String: "+t_aln);	
-			System.out.println("start position in query:"+i+" Query String: "+s_aln1);
-			System.out.println("start position in db:"+j+" Database String: "+t_aln1);
+//			System.out.println("start position in query:"+i+" Query String: "+s_aln);
+//			System.out.println("start position in db:"+j+" Database String: "+t_aln);
 			
 			if(t_aln.length()==0)
-				System.out.println("**********Empty db string  "+t_aln1);
+				System.out.println("**********Empty db string  "+t_aln);
 			
 			List<String> alignString=new ArrayList<String>();
-			alignString.add(s_aln1);
-			alignString.add(t_aln1);
+			alignString.add(s_aln);
+			alignString.add(t_aln);
 			alignString.add(Integer.toString(i));//start position in query
 			alignString.add(Integer.toString(j));//start pos in db
 			

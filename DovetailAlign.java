@@ -139,8 +139,8 @@ import java.util.*;
 	    obj.setQueryAlignment(sequenceList.get(0));
 	    obj.setDbAlignment(sequenceList.get(1));
 	    
-	    obj.setStartPositionQuery(Integer.parseInt(sequenceList.get(2)));//set i
-	    obj.setStartPositionDb(Integer.parseInt(sequenceList.get(3)));//set j
+	    obj.setStartPositionQuery(Integer.parseInt(sequenceList.get(2))-1);//set i
+	    obj.setStartPositionDb(Integer.parseInt(sequenceList.get(3))-1);//set j
 	    //obj.setScore(score);
 	    
 		//return score;
@@ -198,14 +198,11 @@ import java.util.*;
 	    int score=D[i][j];
 	    obj.setScore(score);
 	    
-	    System.out.println("Score of sequence"+score);
+	   // System.out.println("Score of sequence"+score);
 
-		while(i>1 && j>1)//&& D[i-1][j]!=0 && D[i][j-1]!=0)
+		while(i>1 && j>1)
 		{
-			int sc=scoreMat.get(alpha.get(qSeq.charAt(i-1))).get(alpha.get(dbSeq.charAt(j-1)));
-			int d=D[i][j]-scoreMat.get(alpha.get(qSeq.charAt(i-1))).get(alpha.get(dbSeq.charAt(j-1)));
-			int elsei=D[i][j]-gap;
-			int Dij=D[i][j];
+			
 			
 			if(D[i][j]-scoreMat.get(alpha.get(qSeq.charAt(i-1))).get(alpha.get(dbSeq.charAt(j-1))) == D[i-1][j-1])
 			{
@@ -253,8 +250,8 @@ import java.util.*;
 				
 			String s_aln1=s_aln.reverse().toString();
 			String t_aln1=t_aln.reverse().toString();
-			System.out.println("Query String: "+s_aln.toString());
-			System.out.println("Database String: "+t_aln.toString());	
+//			System.out.println("Query String: "+s_aln.toString());
+//			System.out.println("Database String: "+t_aln.toString());	
 			List<String> alignString=new ArrayList<String>();
 			alignString.add(s_aln1);
 			alignString.add(t_aln1);

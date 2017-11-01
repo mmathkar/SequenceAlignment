@@ -1,0 +1,4 @@
+Query Size:1
+Top k scores are:
+Time for query :19 53747
+Size :4241

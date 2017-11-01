@@ -269,8 +269,8 @@ import java.util.*;
 		}
 			String s_aln1=s_aln.reverse().toString();
 			String t_aln1=t_aln.reverse().toString();
-			System.out.println("start position in query:"+i+" Query String: "+s_aln.toString());
-			System.out.println("start position in db:"+j+" Database String: "+t_aln.toString());	
+//			System.out.println("start position in query:"+i+" Query String: "+s_aln.toString());
+//			System.out.println("start position in db:"+j+" Database String: "+t_aln.toString());	
 			List<String> alignString=new ArrayList<String>();
 			alignString.add(s_aln1);
 			alignString.add(t_aln1);

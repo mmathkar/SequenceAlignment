@@ -55,6 +55,8 @@ public class MainController
 		String qSeq="",dbSeq="";
 		
 		
+		
+		
 		FastaSequence fsf= new FastaSequence(args[1]+".txt");//query
 		FastaSequence db= new FastaSequence(args[2]+".txt");//database
 		//List<Integer> score=new ArrayList<Integer>();
@@ -62,7 +64,7 @@ public class MainController
 		List<OutputSequence> objList=new ArrayList<OutputSequence>();
 		
 		String qId,dbId;
-		PrintStream out = new PrintStream(new FileOutputStream("outputDove.txt"));
+		PrintStream out = new PrintStream(new FileOutputStream("outputQueryNewLocal.txt"));
 		System.setOut(out);
 		
 		switch(Integer.parseInt(args[0]))
@@ -91,9 +93,11 @@ public class MainController
 					//ret_score=globalAlign.alignSequence(qSeq,dbSeq,scoreMat,alpha,gap);
 					ret_obj=globalAlign.alignSequence(obj,scoreMat,alpha,gap);
 					
-					System.out.println("start position in query:"+ret_obj.getStartPositionQuery()+" Query String: "+ret_obj.getQueryAlignment());
-					System.out.println("id:"+ret_obj.getDbSequenceId()+"start position in db:"+ret_obj.getStartPositionDb()+"Length"+ret_obj.getDbAlignment().length()+" Database String: ");
-					System.out.println(ret_obj.getDbAlignment());
+					//********************************************************
+					
+//					System.out.println("start position in query:"+ret_obj.getStartPositionQuery()+" Query String: "+ret_obj.getQueryAlignment());
+//					System.out.println("id:"+ret_obj.getDbSequenceId()+"start position in db:"+ret_obj.getStartPositionDb()+"Length"+ret_obj.getDbAlignment().length()+" Database String: ");
+//					System.out.println(ret_obj.getDbAlignment());
 					
 					
 					//Setters
@@ -158,8 +162,7 @@ public class MainController
 					
 					//ret_score=globalAlign.alignSequence(qSeq,dbSeq,scoreMat,alpha,gap);
 					DovetailAlign.alignSequence(obj,scoreMat,alpha,gap);
-					
-					
+										
 					//Setters
 					//obj.setScore(ret_score);
 					
@@ -189,9 +192,10 @@ public class MainController
 		});
 		
 
-		
+		System.out.println("Query Size:"+fsf.size());
 		System.out.println("Top k scores are:");
 		
+		//for entire query.txt
 		
 		for(int i=0;i<k;i++)
 			{
@@ -202,9 +206,12 @@ public class MainController
 			}
 		
 		
+		
+		
 		long endTime   = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
-		System.out.println(totalTime);		
+		System.out.println(totalTime);	
+		
 		
  }
 }
